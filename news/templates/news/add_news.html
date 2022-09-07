@@ -1,0 +1,29 @@
+{% extends 'news/base.html' %}
+
+{% block content %}
+<div class="col-md-12">
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Название новости</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Новая новость">
+  </div>
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Текст новости</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"></textarea>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+    <select class="form-select form-select-lg mb-4" aria-label=".form-select-lg example">
+      <option selected>Выберите категорию</option>
+      {% for item in categorys%}
+      <option value="1">{{ item.title }}</option>
+      {% endfor %}
+    </select>
+    </div>
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-3">
+      <button type="button" class="btn btn-primary">Добавить новость</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
