@@ -10,7 +10,7 @@
 <!--    <h1>{{ title }}</h1>-->
     <div class="list-group">
         {% for item in categories %}
-        <a href="{% url 'category' item.pk %}" class="list-group-item list-group-item-action">{{ item.title }}</a>
+        <a href="{{ item.get_absolute_url }}" class="list-group-item list-group-item-action">{{ item.title }}</a>
         {% endfor %}
     </div>
 </div>
@@ -21,12 +21,12 @@
 {% for item in news %}
     <div class="card mb-12">
         <div class="card-header">
-            Категория: <a href="{% url 'category' item.category.pk %}">{{ item.category }}</a>
+            Категория: <a href="{{ item.category.get_absolute_url }}">{{ item.category }}</a>
         </div>
         <div class="card-body">
             <h5 class="card-title">{{ item.title }}</h5>
             <p class="card-text">{{ item.content }}</p>
-            <a href="{% url 'read_more' item.pk %}" class="btn btn-primary">Read more...</a>
+            <a href="{{ item.get_absolute_url }}" class="btn btn-primary">Read more...</a>
         </div>
         <div class="card-footer text-muted">
             {{ item.created_at|date:"Y-m-d H:i:s" }}

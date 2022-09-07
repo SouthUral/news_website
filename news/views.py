@@ -20,9 +20,9 @@ def index_news(request):
     return render(request, 'news/index.html', context)
 
 
-def category_(request, id_category):
-    news = News.objects.filter(category_id=id_category)
-    category = Category.objects.get(pk=id_category)
+def category_(request, category_id):
+    news = News.objects.filter(category_id=category_id)
+    category = Category.objects.get(pk=category_id)
     categories = get_category()
     context = {
         'categories': categories,
@@ -40,8 +40,8 @@ def add_news(request):
     return render(request, 'news/add_news.html', context)
 
 
-def read_more(request, id_news):
-    news = News.objects.get(pk=id_news)
+def read_more(request, post_id):
+    news = News.objects.get(pk=post_id)
     context = {
         'news': news,
     }
