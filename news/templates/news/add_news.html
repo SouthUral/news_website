@@ -1,6 +1,13 @@
+
 {% extends 'news/base.html' %}
 
+
+
 {% block content %}
+
+{% load news_tags %}
+{% get_categories as categories %}
+
 <div class="col-md-12">
   <div class="mb-3">
     <label for="exampleFormControlInput1" class="form-label">Название новости</label>
@@ -14,7 +21,7 @@
     <div class="col-md-3">
     <select class="form-select form-select-lg mb-4" aria-label=".form-select-lg example">
       <option selected>Выберите категорию</option>
-      {% for item in categorys%}
+      {% for item in categories %}
       <option value="1">{{ item.title }}</option>
       {% endfor %}
     </select>

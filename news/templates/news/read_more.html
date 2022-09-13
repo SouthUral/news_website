@@ -1,6 +1,14 @@
 {% extends 'news/base.html' %}
 
 
+{% block title %}
+<h1>{{ news.category }}</h1>
+{% endblock %}
+
+{% block sidebar %}
+{% include 'inc/_sidebar.html' %}
+{% endblock %}
+
 {% block readmore %}
 <div class="row">
     <div class="col-md-10">
