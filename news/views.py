@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import News, Category
+from .forms import NewsForm
 
 
 # Create your views here.
@@ -27,7 +28,11 @@ def category_(request, category_id):
 
 
 def add_news(request):
-    return render(request, 'news/add_news.html')
+    if request.method == 'POST':
+        pass
+    else:
+        form = NewsForm()
+    return render(request, 'news/add_news.html', {'form': form})
 
 
 def read_more(request, post_id):
