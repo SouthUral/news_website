@@ -15,7 +15,7 @@
     {% block title %} {% endblock %}
     <div class="row">
         <div class="col-md-3">
-            {% include 'inc/_sidebar.html' %} 
+            {% block sidebar %} {% endblock %}
         </div>
         <div class="col-md-9">
             {% block content %} {% endblock %}
