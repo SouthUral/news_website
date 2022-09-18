@@ -1,30 +1,57 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import News, Category
 from .forms import NewsForm
+from django.views.generic import ListView
 
 
 # Create your views here.
 
 
-def index_news(request):
-    news = News.objects.exclude(is_published=False)
-    header = 'Список новостей'
-    context = {
-        'title': header,
-        'news': news
-    }
-    # news_list = ''.join([f'  <p>{obj.id} | {obj.title}: {obj.content}</p>\n' for obj in news])
-    return render(request, 'news/index.html', context)
+class HomeViews(ListView):
+    model = News
+    template_name = 'news/index.html'
+    context_object_name = 'news'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Главная страница'
+        return context
+
+    def get_queryset(self):
+        return News.objects.filter(is_published=True)
 
 
-def category_(request, category_id):
-    news = News.objects.filter(category_id=category_id)
-    category = Category.objects.get(pk=category_id)
-    context = {
-        'title': category,
-        'news': news,
-    }
-    return render(request, 'news/index.html', context)
+class CategoryViews(HomeViews):
+    allow_empty = False
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = Category.objects.get(pk=self.kwargs['category_id'])
+        return context
+
+    def get_queryset(self):
+        filter_field = {'category_id': self.kwargs['category_id'], 'is_published': True}
+        return News.objects.filter(**filter_field)
+
+# def index_news(request):
+#     news = News.objects.exclude(is_published=False)
+#     header = 'Список новостей'
+#     context = {
+#         'title': header,
+#         'news': news
+#     }
+#     # news_list = ''.join([f'  <p>{obj.id} | {obj.title}: {obj.content}</p>\n' for obj in news])
+#     return render(request, 'news/index.html', context)
+
+
+# def category_(request, category_id):
+#     news = News.objects.filter(category_id=category_id)
+#     category = Category.objects.get(pk=category_id)
+#     context = {
+#         'title': category,
+#         'news': news,
+#     }
+#     return render(request, 'news/index.html', context)
 
 
 def add_news(request):
