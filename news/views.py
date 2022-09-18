@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import News, Category
 from .forms import NewsForm
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView, CreateView
 
 
 # Create your views here.
@@ -54,21 +54,32 @@ class CategoryViews(HomeViews):
 #     return render(request, 'news/index.html', context)
 
 
-def add_news(request):
-    if request.method == 'POST':
-        form = NewsForm(request.POST)
-        if form.is_valid():
-            news = form.save()
-            return redirect(news)
-    else:
-        form = NewsForm()
-    return render(request, 'news/add_news.html', {'form': form})
+# def add_news(request):
+#     if request.method == 'POST':
+#         form = NewsForm(request.POST)
+#         if form.is_valid():
+#             news = form.save()
+#             return redirect(news)
+#     else:
+#         form = NewsForm()
+#     return render(request, 'news/add_news.html', {'form': form})
 
 
-def read_more(request, post_id):
-    news = get_object_or_404(News, pk=post_id)
-    # news = News.objects.get(pk=post_id)
-    context = {
-        'news': news,
-    }
-    return render(request, 'news/read_more.html', context)
+# def read_more(request, post_id):
+#     news = get_object_or_404(News, pk=post_id)
+#     # news = News.objects.get(pk=post_id)
+#     context = {
+#         'news': news,
+#     }
+#     return render(request, 'news/read_more.html', context)
+
+class ViewNews(DetailView):
+    model = News
+    template_name = 'news/read_more.html'
+    pk_url_kwarg = 'post_id'
+    context_object_name = 'news'
+
+
+class CreateNews(CreateView):
+    form_class = NewsForm
+    template_name = 'news/add_news.html'
